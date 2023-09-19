@@ -1,0 +1,27 @@
+/* Synthesizer.css */
+
+.keyboard {
+    display: flex;
+    justify-content: space-evenly;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .white-key {
+    flex: 1;
+    min-width: 30px; /* Adjust as needed */
+    height: 120px;
+    background-color: white;
+    border: 1px solid #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .white-key:hover {
+    background-color: #ccc;
+  }
+  

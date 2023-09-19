@@ -26,7 +26,7 @@ function Synthesizer() {
 
   return (
     <div>
-      <h1>Web Synthesizer</h1>
+      <h1>My Synthesizer</h1>
       <div className="keyboard">
         {octaveNotes.map((note, index) => (
           <div
