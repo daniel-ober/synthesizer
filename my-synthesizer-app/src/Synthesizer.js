@@ -1,44 +1,42 @@
 import React, { useState } from 'react';
 import * as Tone from 'tone';
+import './Synthesizer.css'; // Import CSS file for styling
 
 function Synthesizer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const synth = new Tone.Synth().toDestination();
 
-  const octaveNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
+  const octaveNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5'];
 
   const playNote = (note) => {
     synth.triggerAttackRelease(note, '4n');
   };
 
-  const togglePlay = () => {
-    if (isPlaying) {
-      synth.triggerRelease();
-    } else {
+  const handleKeyDown = (note) => {
+    if (!isPlaying) {
       setIsPlaying(true);
-      // Play each note in the octave sequentially with a delay
-      playNextNoteInOctave(0);
+      playNote(note);
     }
   };
 
-  const playNextNoteInOctave = (index) => {
-    if (index < octaveNotes.length) {
-      playNote(octaveNotes[index]);
-      setTimeout(() => playNextNoteInOctave(index + 1), 250); // Delay between notes
-    } else {
-      setIsPlaying(false);
-    }
+  const handleKeyUp = () => {
+    setIsPlaying(false);
+    synth.triggerRelease();
   };
 
   return (
     <div>
       <h1>Web Synthesizer</h1>
-      <button onClick={togglePlay}>{isPlaying ? 'Stop' : 'Play'}</button>
-      <div className="note-buttons">
+      <div className="keyboard">
         {octaveNotes.map((note, index) => (
-          <button key={index} onClick={() => playNote(note)}>
+          <div
+            key={index}
+            className="white-key"
+            onMouseDown={() => handleKeyDown(note)}
+            onMouseUp={handleKeyUp}
+          >
             {note}
-          </button>
+          </div>
         ))}
       </div>
     </div>
