@@ -3,65 +3,44 @@ import * as Tone from 'tone';
 
 function Synthesizer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const synth = new Tone.Synth().toDestination(); //create a synth and connect it to the main output
-  const now = Tone.now()
+  const synth = new Tone.Synth().toDestination();
 
-  const playC4 = () => {
-    synth.triggerAttack('C4', "16n"); // trigger the attack into the note subdivision (i.e. 16n = 16th note) or immediately ("now")
-    // triggerAttackRelease is a combination of triggerAttack and triggerRelease  
-};
+  const octaveNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
 
-  const playE4 = () => {
-    synth.triggerAttack('E4', "8n"); // trigger the attack into the note subdivision (i.e. 8n = 8th note) or immediately ("now")
-    synth.triggerRelease(now + 1) // wait one second before triggering the release  
-};
-
-  const playG4 = () => {
-    synth.triggerAttackRelease("C4", "8n", now)
+  const playNote = (note) => {
+    synth.triggerAttackRelease(note, '4n');
   };
 
-  const toggleC4 = () => {
+  const togglePlay = () => {
     if (isPlaying) {
       synth.triggerRelease();
     } else {
-      playC4();
+      setIsPlaying(true);
+      // Play each note in the octave sequentially with a delay
+      playNextNoteInOctave(0);
     }
-    setIsPlaying(!isPlaying);
   };
 
-  const toggleE4 = () => {
-    if (isPlaying) {
-      synth.triggerAttack();
+  const playNextNoteInOctave = (index) => {
+    if (index < octaveNotes.length) {
+      playNote(octaveNotes[index]);
+      setTimeout(() => playNextNoteInOctave(index + 1), 250); // Delay between notes
     } else {
-      playE4();
+      setIsPlaying(false);
     }
-    setIsPlaying(!isPlaying);
   };
-
-  const toggleG4 = () => {
-    if (isPlaying) {
-      synth.triggerRelease();
-    } else {
-      playG4();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
 
   return (
     <div>
-      <h1>C4</h1>
-      <button onClick={toggleC4}>
-        {isPlaying ? 'Stop' : 'Play'}
-      </button>
-      <h1>E4</h1>
-      <button onClick={toggleG4}>
-        {isPlaying ? 'Stop' : 'Play'}
-      </button>
-      <h1>G4</h1>
-      <button onClick={toggleG4}>
-        {isPlaying ? 'Stop' : 'Play'}
-      </button>
+      <h1>Web Synthesizer</h1>
+      <button onClick={togglePlay}>{isPlaying ? 'Stop' : 'Play'}</button>
+      <div className="note-buttons">
+        {octaveNotes.map((note, index) => (
+          <button key={index} onClick={() => playNote(note)}>
+            {note}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
