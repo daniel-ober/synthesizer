@@ -1,27 +1,42 @@
 /* Synthesizer.css */
 
 .keyboard {
-    display: flex;
-    justify-content: space-evenly;
-    width: 80%;
-    margin: 0 auto;
-  }
-  
-  .white-key {
-    flex: 1;
-    min-width: 30px; /* Adjust as needed */
-    height: 120px;
-    background-color: white;
-    border: 1px solid #000;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .white-key:hover {
-    background-color: #ccc;
-  }
-  
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.white-key {
+  flex: 1;
+  min-width: 30px; /* Adjust as needed */
+  height: 120px;
+  background-color: white;
+  border: 1px solid #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-weight: bold;
+  text-align: center;
+}
+
+.white-key:hover {
+  background-color: #ccc;
+}
+
+/* Add styles for black keys */
+.black-key {
+  flex: 0.6; /* Adjust the width of black keys relative to white keys */
+  height: 80px; /* Adjust the height of black keys */
+  background-color: black;
+  border: 1px solid #000;
+  position: relative;
+  top: -80px; /* Position black keys above white keys */
+  z-index: 1; /* Ensure black keys appear above white keys */
+  cursor: pointer;
+}
+
+.black-key:hover {
+  background-color: #444;
+}
